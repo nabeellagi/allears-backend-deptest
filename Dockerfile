@@ -1,11 +1,12 @@
 FROM python:3.11-slim
 
-RUN useradd -m -u 1000 user
+RUN useradd -m -u 1000 user && \
+    mkdir -p /home/user/.cache/huggingface && \
+    mkdir -p /home/user/.cache/sentence-transformers && \
+    chown -R user:user /home/user/.cache
+
 USER user
 WORKDIR /app
-
-RUN mkdir -p /home/user/.cache/huggingface && \
-    mkdir -p /home/user/.cache/sentence-transformers
 
 COPY --chown=user . .
 
